@@ -11,67 +11,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.school.dto.StudentDto;
+import com.accenture.school.dto.StudentClassesDto;
 import com.accenture.school.exception.RecordNotFoundException;
-import com.accenture.school.service.StudentService;
+import com.accenture.school.service.StudentClassesService;
 
 @RestController
-public class StudentController {
+public class StudentClassesController {
 	@Autowired
-	private StudentService studentService;
+	private StudentClassesService studentClassesService;
 	
 	//Controller route path
-	final String BASE_URL = "/students";
+	final String BASE_URL = "/studentClasses";
 	
 	@RequestMapping(value = BASE_URL + "/{id}", method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-	private ResponseEntity<StudentDto> getById(@PathVariable("id") long id) 
+	private ResponseEntity<StudentClassesDto> getById(@PathVariable("id") long id) 
 	{
-		StudentDto dto = studentService.getById(id);
+		StudentClassesDto dto = studentClassesService.getById(id);
 		if(dto == null) {
 	         throw new RecordNotFoundException("No record found : " + id);
 	    }
-	    return new ResponseEntity<StudentDto>(dto, HttpStatus.OK);
+	    return new ResponseEntity<StudentClassesDto>(dto, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = BASE_URL + "/{id}/classes", method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-	private ResponseEntity<StudentDto> getByIdWithClasses(@PathVariable("id") long id) 
-	{
-		StudentDto dto = studentService.getByIdWithClass(id);
-		if(dto == null) {
-	         throw new RecordNotFoundException("No record found : " + id);
-	    }
-	    return new ResponseEntity<StudentDto>(dto, HttpStatus.OK);		
-	}
 
 	@RequestMapping(value = BASE_URL, method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-	private ResponseEntity<List<StudentDto>> getAll() 
+	private ResponseEntity<List<StudentClassesDto>> getAll() 
 	{
-		List<StudentDto> dtos = studentService.getAll();
+		List<StudentClassesDto> dtos = studentClassesService.getAll();
 		if(dtos == null) {
 	         throw new RecordNotFoundException("No record found");
 	    }
-	    return new ResponseEntity<List<StudentDto>>(dtos, HttpStatus.OK);		
+	    return new ResponseEntity<List<StudentClassesDto>>(dtos, HttpStatus.OK);		
 	}
 	
 	@RequestMapping(value = BASE_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	private ResponseEntity<Long> create(@RequestBody StudentDto dto) 
+	private ResponseEntity<Long> create(@RequestBody StudentClassesDto dto) 
 	{	
-		long id = studentService.create(dto);
+		long id = studentClassesService.create(dto);
 		
 		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = BASE_URL + "/{id}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
-	private ResponseEntity<Boolean> update(@RequestBody StudentDto dto, @PathVariable("id") long id) 
+	private ResponseEntity<Boolean> update(@RequestBody StudentClassesDto dto, @PathVariable("id") long id) 
 	{
-		boolean updated = studentService.update(dto);
+		boolean updated = studentClassesService.update(dto);
 		return new ResponseEntity<Boolean>(updated, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = BASE_URL + "/{id}", method = RequestMethod.DELETE, consumes = "application/json", produces = "application/json")
 	private ResponseEntity<Boolean> delete(@PathVariable("id") long id) 
 	{
-		boolean deleted = studentService.delete(id);
+		boolean deleted = studentClassesService.delete(id);
 		return new ResponseEntity<Boolean>(deleted, HttpStatus.OK);
 	}
 

@@ -3,10 +3,10 @@ package com.accenture.school.dto;
 public class StudentClassesDto {
 
 	private ClassesDto classes;
+	private StudentDto student;
 	private int evaluation; 
 	private String status;
 
-	
 	public ClassesDto getClasses() {
 		return classes;
 	}
@@ -29,6 +29,14 @@ public class StudentClassesDto {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public StudentDto getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDto student) {
+		this.student = student;
 	}
 
 }

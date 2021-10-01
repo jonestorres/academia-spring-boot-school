@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.accenture.school.enums.StudentStatusEnum;
@@ -30,6 +32,13 @@ public class StudentClasses extends BaseModel implements Serializable {
 	@Column(name = "status", nullable = false)
 	private StudentStatusEnum status;
 	
+    @PrePersist
+    @PreUpdate
+    void setStatus() {
+        this.status = evaluation >=7 ? StudentStatusEnum.APPROVED : 
+			StudentStatusEnum.REAPPROVED;;
+    }
+    
 	public Student getStudent() {
 		return student;
 	}
